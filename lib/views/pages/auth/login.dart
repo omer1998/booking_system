@@ -2,6 +2,7 @@ import 'package:booking_system/controller/authController.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 enum AuthPageType { login, register }
@@ -106,7 +107,7 @@ class _LoginState extends State<Login> {
         child: Scaffold(
           appBar: AppBar(
             title: authController.pageAuthType == AuthPageType.login
-                ? const Text("Login")
+                ? Text(AppLocalizations.of(context)!.login)
                 : const Text("Register"),
           ),
           body: Padding(

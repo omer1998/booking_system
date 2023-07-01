@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 import '../../../utilities/routes.dart';
 
@@ -118,7 +120,7 @@ class _MyLogInState extends State<MyLogIn> {
         child: ModalProgressHUD(
           inAsyncCall: isProgress,
           child: Scaffold(
-            appBar: AppBar(title: const Text("Login")),
+            appBar: AppBar(title: Text(AppLocalizations.of(context)!.login)),
             body: Padding(
               padding: const EdgeInsets.all(16),
               child: Center(
@@ -128,7 +130,7 @@ class _MyLogInState extends State<MyLogIn> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Login here",
+                      Text(AppLocalizations.of(context)!.loginHere,
                           style: Theme.of(context).textTheme.displayMedium),
                       const SizedBox(
                         height: 16,
@@ -203,7 +205,7 @@ class _MyLogInState extends State<MyLogIn> {
                               backgroundColor: Colors.blue,
                               padding: const EdgeInsets.all(16),
                               textStyle: Theme.of(context).textTheme.bodyLarge),
-                          child: const Text("Login")),
+                          child:  Text(AppLocalizations.of(context)!.login)),
                       const SizedBox(
                         height: 20,
                       ),

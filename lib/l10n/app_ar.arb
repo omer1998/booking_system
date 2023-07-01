@@ -1,0 +1,11 @@
+{
+  "helloWorld": "اهلا يا عالم",
+  "@helloWorld": {
+    "description": "The conventional newborn programmer greeting"
+  },
+  "doctors": "الاطباء",
+  "show": "عرض",
+  "more": "مزيد",
+  "login": "تسجيل دخول",
+  "loginHere": "سجل هنا"
+}
