@@ -1,1 +1,5 @@
-const String messagesCollection = 'messages';
+
+class AppConstants {
+  static const String messagesCollection = 'messages';
+
+}

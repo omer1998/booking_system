@@ -5,6 +5,7 @@ import 'package:booking_system/utilities/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
@@ -20,9 +21,16 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context);
     return MaterialApp(
+<<<<<<< Updated upstream
       onGenerateTitle: (context)=> AppLocalization.of(context).doctors,
       localizationsDelegates: [
+=======
+      onGenerateTitle: (context) => AppLocalizations.of(context)!.helloWorld,
+      localizationsDelegates:const [
+        AppLocalizations.delegate,
+>>>>>>> Stashed changes
         GlobalMaterialLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate
@@ -33,8 +41,9 @@ class MyApp extends StatelessWidget {
       ],
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        // useMaterial3: true
       ),
-      initialRoute: Routes.bookingPage,
+      initialRoute: Routes.mainPage,
       onGenerateRoute: (settings) => onGenerateRoute(settings),
     );
   }

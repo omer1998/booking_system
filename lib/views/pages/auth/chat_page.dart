@@ -23,7 +23,7 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     CollectionReference messages =
-        FirebaseFirestore.instance.collection(messagesCollection);
+        FirebaseFirestore.instance.collection(AppConstants.messagesCollection);
 
     return StreamBuilder<QuerySnapshot>(
       stream: messages.orderBy("date", descending: true).snapshots(),
