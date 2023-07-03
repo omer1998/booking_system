@@ -43,13 +43,9 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl:
-<<<<<<< Updated upstream
-  intl_translation: 
-=======
   # intl_translation: 
   material_design_icons_flutter: ^7.0.7296
   flutter_screenutil: ^5.8.4
->>>>>>> Stashed changes
 
 
 
