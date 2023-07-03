@@ -2,10 +2,10 @@
 
 import 'dart:core';
 
-import 'package:booking_system/service/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../service/auth.dart';
 import '../views/pages/auth/log_in.dart';
 
 class AuthController with ChangeNotifier{
