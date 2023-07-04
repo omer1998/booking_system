@@ -7,5 +7,7 @@
   "show": "عرض",
   "more": "مزيد",
   "login": "تسجيل دخول",
-  "loginHere": "سجل هنا"
-}
+  "loginHere": "سجل هنا",
+  "appointment" : "موعد"
+
+  }

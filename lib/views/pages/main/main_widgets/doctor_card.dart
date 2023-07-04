@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DoctorCard extends StatefulWidget {
   const DoctorCard({super.key});
@@ -39,7 +40,7 @@ class _DoctorCardState extends State<DoctorCard> {
           // Image.asset('assets/images/doctor-image.jpg'), // image path, say from CodeGeeX or similar. Dart task.
       
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding:  EdgeInsets.all(8.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -53,7 +54,7 @@ class _DoctorCardState extends State<DoctorCard> {
                   children: [
                     ElevatedButton(
                       onPressed: () {},
-                      child: Text("موعد"),
+                      child: Text(AppLocalizations.of(context)!.appointment),
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)

@@ -7,5 +7,6 @@
   "show": "show",
   "more": "more",
   "login" : "login",
-  "loginHere": "Login here" 
+  "loginHere": "Login here",
+  "appointment" : "appointment"
 }
