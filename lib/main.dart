@@ -1,18 +1,19 @@
-
 import 'package:booking_system/controller/authController.dart';
-import 'package:booking_system/locale/locale.dart';
 import 'package:booking_system/utilities/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(ChangeNotifierProvider(create: (context) => AuthController(),
-  child: const MyApp()));
+  runApp(ChangeNotifierProvider(
+    create: (context) => AuthController(),
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -23,22 +24,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
     return MaterialApp(
-<<<<<<< Updated upstream
-      onGenerateTitle: (context)=> AppLocalization.of(context).doctors,
-      localizationsDelegates: [
-=======
       onGenerateTitle: (context) => AppLocalizations.of(context)!.helloWorld,
-      localizationsDelegates:const [
+      localizationsDelegates: [
         AppLocalizations.delegate,
->>>>>>> Stashed changes
         GlobalMaterialLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
       ],
-      supportedLocales:  [
-        Locale("en",""),
-        Locale("ar", "")
-      ],
+      supportedLocales: [Locale("en"), Locale("ar")],
+      // or in other way
+      // localizationsDelegates: AppLocalizations.localizationsDelegates,
+      // supportedLocales: AppLocalizations.supportedLocales,
       theme: ThemeData(
         primarySwatch: Colors.blue,
         // useMaterial3: true
@@ -59,8 +55,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
- 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,13 +62,17 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: Column(children: [ElevatedButton(onPressed: (){
-          Navigator.pushNamed(context,Routes.signIn);
-        }, child: const Text("Login"))],)    
-        ),
-      
-       // This trailing comma makes auto-formatting nicer for build methods.
+          child: Column(
+        children: [
+          ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, Routes.signIn);
+              },
+              child:  Text(AppLocalizations.of(context)!.login))
+        ],
+      )),
+
+      // This trailing comma makes auto-formatting nicer for build methods.
     );
-  
-}
+  }
 }

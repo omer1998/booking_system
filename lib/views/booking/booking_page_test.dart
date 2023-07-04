@@ -1,5 +1,5 @@
-import 'package:booking_system/locale/locale.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BookingScreen extends StatefulWidget {
   const BookingScreen({super.key});
@@ -29,7 +29,7 @@ class _BookingScreenState extends State<BookingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalization.of(context).doctors),
+        title: Text(AppLocalizations.of(context)!.doctors),
       ),
       body: Column(
         children: [
