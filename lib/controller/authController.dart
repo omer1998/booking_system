@@ -5,8 +5,9 @@ import 'dart:core';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../services/auth.dart';
-import '../views/pages/auth/log_in.dart';
+
+import '../services/auth_old.dart';
+import '../views/pages/auth_old/log_in.dart';
 
 class AuthController with ChangeNotifier{
   String _email= "";

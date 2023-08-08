@@ -211,7 +211,7 @@ class _MyLogInState extends State<MyLogIn> {
                       ),
                       InkWell(
                           onTap: () {
-                            Navigator.pushNamed(context, Routes.signUp);
+                            // Navigator.pushNamed(context, Routes.signUp);
                           },
                           child:
                               const Text("You don't have an account Register"))

@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+// import 'package:socket_io_client/socket_io_client.dart' as IO;
+
+
 
 class PersonalImageSlider extends StatelessWidget {
   const PersonalImageSlider({super.key});
