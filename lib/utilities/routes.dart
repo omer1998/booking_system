@@ -5,6 +5,7 @@ import 'package:booking_system/views/pages/doctor/doctor_page.dart';
 import 'package:flutter/material.dart';
 
 import '../main.dart';
+import '../views/pages/auth/doctor_page/setup.dart';
 import '../views/pages/auth/patient_page/sign_up/p_sign_up_page.dart';
 import '../views/pages/main/main_page.dart';
 import '../views/pages/auth_old/chat_page.dart';
@@ -23,6 +24,9 @@ class Routes{
   static const mainPage= '/main_page';
   static const bookingPage = '/booking_page';
   static const doctorPage = '/doctor_page';
+
+  // for doctors
+  static const doctorSetup = "/doctor-setup";
 
 
 
@@ -49,6 +53,8 @@ class Routes{
       return MaterialPageRoute(builder: (_) => const BookingScreen());
       case Routes.doctorPage:
         return MaterialPageRoute(builder: (_) => const  DoctorPage());
+      case Routes.doctorSetup:
+        return MaterialPageRoute(builder: (_) => const DoctorSetupPage());
     default:
       return MaterialPageRoute(builder: (_) => const MyHomePage(title: '',));
   }

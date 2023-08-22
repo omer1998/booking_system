@@ -1,4 +1,3 @@
-
 import 'package:booking_system/repositories/patient_repository_local.dart';
 import 'package:booking_system/utilities/routes.dart';
 import 'package:booking_system/views/pages/auth/patient_page/sign_in/p_sign_in_controller.dart';
@@ -12,6 +11,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+
 // import 'package:flutter_easyloading/flutter_easyloading.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,9 +19,7 @@ Future<void> main() async {
   // initializing hive
   await Hive.initFlutter();
   runApp(
-    ProviderScope(
-      child: MyApp()
-      ),
+    ProviderScope(child: MyApp()),
   );
 }
 
@@ -33,7 +31,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
     return MaterialApp(
-      builder: EasyLoading.init(), // for showing loading 
+      builder: EasyLoading.init(), // for showing loading
       onGenerateTitle: (context) => AppLocalizations.of(context)!.helloWorld,
       localizationsDelegates: [
         AppLocalizations.delegate,
@@ -49,7 +47,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         // useMaterial3: true
       ),
-      
+
       initialRoute: Routes.home,
       onGenerateRoute: (settings) => onGenerateRoute(settings),
     );
@@ -66,12 +64,14 @@ class MyHomePage extends ConsumerStatefulWidget {
 }
 
 class _MyHomePageState extends ConsumerState<MyHomePage> {
-
-  @override 
+  @override
   void initState() {
-    ref.read(patientSignInNotifierProvider.notifier).checkPatientAuthValidation(context);
+    ref
+        .read(patientSignInNotifierProvider.notifier)
+        .checkPatientAuthValidation(context);
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,7 +87,11 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                 Navigator.pushNamed(context, Routes.patientSignUp);
               },
               child: Text("Sign Up as Patient")),
-          ElevatedButton(onPressed: () {}, child: Text("Sign Up as Doctor"))
+          ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pushReplacementNamed(Routes.doctorSetup);
+              },
+              child: Text("Sign Up as Doctor"))
         ],
       )),
 
