@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:booking_system/utilities/routes.dart';
 import 'package:booking_system/views/pages/doctor/widgets/doctor_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -421,7 +422,7 @@ class DoctorSetupPageState extends State<DoctorSetupPage> {
         currentStep += 1;
       });
     } else {
-      // onLastStepAction();
+      onLastStepAction();
       print("last step");
     }
   }
@@ -432,5 +433,9 @@ class DoctorSetupPageState extends State<DoctorSetupPage> {
         : setState(() {
             currentStep -= 1;
           });
+  }
+  
+  void onLastStepAction() {
+    Navigator.of(context).pushNamedAndRemoveUntil(Routes.bookingPage, (route) => false);
   }
 }

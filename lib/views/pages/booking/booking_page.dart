@@ -1,5 +1,6 @@
 // import 'package:booking_calendar/booking_calendar.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class BookingPage extends StatefulWidget {
   const BookingPage({super.key});
@@ -12,8 +13,12 @@ class BookingPageState extends State<BookingPage> {
   @override
   Widget build(BuildContext context) {
     // return BookingCalendar(bookingService: Booking, getBookingStream: getBookingStream, uploadBooking: (Booking){ }, convertStreamResultToDateTimeRanges: convertStreamResultToDateTimeRanges);
-  return Center(
-    child: Column(children: <Widget>[Text("Hello World")])
+  return Scaffold(
+    body: Column(
+      children: <Widget>[
+        Text("Hello World"),
+        // Text()
+    ])
   );
   }
 

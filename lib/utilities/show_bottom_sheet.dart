@@ -43,3 +43,12 @@ showImagePickerBottomSheet(BuildContext context) {
             });
       }
 
+
+
+// int numberOfCakes = 1;
+// int numberOfCandles = 1;
+// bool isCandleOn = true;
+// bool isCakeColorful= true;
+// int cakeColorNumber = 4;
+// List<String> cakeColors = ["orange","yellow", "light blue","cyan" ];
+// String giftName = "cake";
