@@ -17,6 +17,7 @@ abstract class PatientRepository {
       String firstName, String lastName, String email, String password);
   patientLogIn(Map<String, dynamic> body);
   checkPatientAuthValidation();
+  gettingPatientInfo(int id);
 }
 
 class PatientApi extends PatientRepository {
@@ -109,6 +110,13 @@ class PatientApi extends PatientRepository {
     } catch (e) {
       print("patient auth validation ${e}");
     }
+  }
+  
+  @override
+  gettingPatientInfo(int id) async{
+    // final response = await http.get(
+    //   Uri.parse("")
+    // );
   }
 }
 

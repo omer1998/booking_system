@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../models/patients/patient_model.dart';
 import 'main_widgets/doctor_card.dart';
 import 'main_widgets/doctor_categories.dart';
 import 'main_widgets/doctor_list.dart';
@@ -11,13 +12,21 @@ import 'main_widgets/info_bar.dart';
 import 'main_widgets/info_icons.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({super.key});
+  final Patient patient;
+  const MainPage({super.key, required this.patient});
 
   @override
   State<MainPage> createState() => _MainPageState();
 }
 
+
 class _MainPageState extends State<MainPage> {
+
+  @override
+  void initState() {
+    print("the patient is ${widget.patient.first_name}");
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,25 +70,25 @@ class _MainPageState extends State<MainPage> {
               leading: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: CircleAvatar(
-                    backgroundImage:
-                        AssetImage("assets/images/doctor-image.jpg")),
+                    backgroundImage: widget.patient.patient_info!.profile_image != null ? NetworkImage(widget.patient.patient_info!.profile_image,) : AssetImage("assets/images/doctor-image.jpg") as ImageProvider,
+                        ),
               ),
               // title: Text("omer"),
               flexibleSpace: FlexibleSpaceBar(
                 expandedTitleScale: 1.5,
                 // centerTitle: true,
-                title: Text("omer"),
-                background: Stack(
+                title: Text("hello, ${widget.patient.first_name} ${widget.patient.last_name}"),
+                background: const Stack(
                   // fit: StackFit.expand,
-                  children: [
+                  children:  [
                     DecoratedBox(
                         decoration: BoxDecoration(
                             gradient: LinearGradient(
                                 begin: Alignment.topCenter,
                                 end: AlignmentDirectional.bottomCenter,
                                 colors: [
-                          Color(0x60000000),
-                          Color(0x00000000),
+                          Color.fromARGB(95, 245, 105, 177),
+                          Color.fromARGB(0, 169, 224, 229),
                         ])))
                   ],
                 ),
@@ -105,7 +114,7 @@ class _MainPageState extends State<MainPage> {
               child: DoctorCategories(),
             ),
             const SliverToBoxAdapter(
-              child: InfoBar(title: "Top Doctors", action: "See All",),
+              child: InfoBar(title: "Doctors", action: "See All",),
             ),
             SliverList(
                 delegate: SliverChildBuilderDelegate(childCount: 50,

@@ -91,7 +91,13 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
               onPressed: () {
                 Navigator.of(context).pushReplacementNamed(Routes.doctorSetup);
               },
-              child: Text("Sign Up as Doctor"))
+              child: Text("Sign Up as Doctor")),
+
+              ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pushReplacementNamed(Routes.bookingPage);
+              },
+              child: Text("Booking Page"))
         ],
       )),
 

@@ -51,11 +51,16 @@ class PatientSignInNotifier extends StateNotifier<PatientSignInPageState> {
               ref
                   .read(patientLocalProvider)
                   .savePatientToken(myResponse.token!);
+              showSnackBar(context,"Token is saved");
+
             } catch (e) {
               print(e);
+              showSnackBar(context, e.toString());
+              return;
             }
             Navigator.of(context)
-                .pushNamedAndRemoveUntil(Routes.mainPage, (route) => false);
+                .pushNamedAndRemoveUntil(Routes.mainPage, (route) => false, arguments: myResponse.user);
+                // we give the user detail to the main page of the user
           });
     });
   }

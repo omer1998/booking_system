@@ -5,8 +5,10 @@ import 'package:booking_system/views/pages/doctor/doctor_page.dart';
 import 'package:flutter/material.dart';
 
 import '../main.dart';
+import '../models/patients/patient_model.dart';
 import '../views/pages/auth/doctor_page/setup.dart';
 import '../views/pages/auth/patient_page/sign_up/p_sign_up_page.dart';
+import '../views/pages/booking/booking_page.dart';
 import '../views/pages/main/main_page.dart';
 import '../views/pages/auth_old/chat_page.dart';
 import '../views/pages/auth_old/log_in.dart';
@@ -48,9 +50,10 @@ class Routes{
     case Routes.chatPage:
       return MaterialPageRoute(builder: (_) => const ChatPage());
     case Routes.mainPage:
-      return MaterialPageRoute(builder: (_) => const MainPage());
+      var patient = settings.arguments as Patient;
+      return MaterialPageRoute(builder: (_) =>  MainPage(patient: patient,));
     case Routes.bookingPage:
-      return MaterialPageRoute(builder: (_) => const BookingScreen());
+      return MaterialPageRoute(builder: (_) => const BookingPage());
       case Routes.doctorPage:
         return MaterialPageRoute(builder: (_) => const  DoctorPage());
       case Routes.doctorSetup:
