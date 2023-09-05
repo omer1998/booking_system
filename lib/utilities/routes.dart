@@ -5,6 +5,7 @@ import 'package:booking_system/views/pages/doctor/doctor_page.dart';
 import 'package:flutter/material.dart';
 
 import '../main.dart';
+import '../models/doctor.dart';
 import '../models/patients/patient_model.dart';
 import '../views/pages/auth/doctor_page/setup.dart';
 import '../views/pages/auth/patient_page/sign_up/p_sign_up_page.dart';
@@ -55,7 +56,8 @@ class Routes{
     case Routes.bookingPage:
       return MaterialPageRoute(builder: (_) => const BookingPage());
       case Routes.doctorPage:
-        return MaterialPageRoute(builder: (_) => const  DoctorPage());
+      final doctor = settings.arguments as Doctor;
+        return MaterialPageRoute(builder: (_) => DoctorPage(doctor: doctor,));
       case Routes.doctorSetup:
         return MaterialPageRoute(builder: (_) => const DoctorSetupPage());
     default:

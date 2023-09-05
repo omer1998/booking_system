@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:booking_system/repositories/patient_repository_local.dart';
 import 'package:booking_system/repositories/patient_repository_remote.dart';
+import 'package:booking_system/utilities/custom_snackbar.dart';
 import 'package:booking_system/utilities/handle_response.dart';
 import 'package:booking_system/utilities/routes.dart';
 import 'package:booking_system/views/share_widgets/show_snackbar.dart';
@@ -51,7 +52,8 @@ class PatientSignInNotifier extends StateNotifier<PatientSignInPageState> {
               ref
                   .read(patientLocalProvider)
                   .savePatientToken(myResponse.token!);
-              showSnackBar(context,"Token is saved");
+                  
+              showCustomSnackBar(context,"Token is saved");
 
             } catch (e) {
               print(e);

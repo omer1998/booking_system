@@ -1,4 +1,5 @@
 import 'package:booking_system/repositories/patient_repository_local.dart';
+import 'package:booking_system/repositories/patient_repository_remote.dart';
 import 'package:booking_system/utilities/routes.dart';
 import 'package:booking_system/views/pages/auth/patient_page/sign_in/p_sign_in_controller.dart';
 import 'package:booking_system/views/pages/auth/patient_page/sign_up/p_sign_up_controller.dart';
@@ -18,6 +19,7 @@ Future<void> main() async {
   await Firebase.initializeApp();
   // initializing hive
   await Hive.initFlutter();
+  // register all type adapter here to be used in hive
   runApp(
     ProviderScope(child: MyApp()),
   );
@@ -46,10 +48,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         // useMaterial3: true
+        appBarTheme: AppBarTheme(
+          // color: Colors.black,
+          // actionsIconTheme: IconThemeData(color: Colors.black)
+        )
       ),
-
+      
       initialRoute: Routes.home,
       onGenerateRoute: (settings) => onGenerateRoute(settings),
+      
     );
   }
 }
@@ -75,6 +82,9 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: ElevatedButton(child: Text("fetch"),onPressed: () async{
+        await ref.read(patientApiProvider).getAllDoctors();
+      }, ),
       appBar: AppBar(
         title: Text(widget.title),
       ),

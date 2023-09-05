@@ -3,126 +3,63 @@ import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class Doctor {
-  final String firstName;
-  final String lastName;
-  final String? practisingFrom;
-  final String? professionalStatment;
-  final String phone;
-  final String password;
-  final String emailAddress;
+import 'clinic.dart';
 
+class Doctor {
+  final int id;
+  final String first_name;
+  final String last_name;
+  final Clinic clinic;
+  final String speciality;
+  final String? practising_from;
+  final String? professional_statment;
+  
+  final String email_address;
+  final String? image_profile_url;
+  
   Doctor({
-    required this.firstName,
-    required this.lastName,
-    this.practisingFrom,
-    this.professionalStatment,
-    required this.phone,
-    required this.password,
-    required this.emailAddress,
+    required this.id,
+    required this.first_name,
+    required this.last_name,
+    required this.speciality,
+    this.practising_from,
+    this.professional_statment,
+    required this.email_address,
+    this.image_profile_url,
+    required this.clinic,
   });
 
-  Doctor copyWith({
-    String? firstName,
-    String? lastName,
-    String? practisingFrom,
-    String? professionalStatment,
-    String? phone,
-    String? password,
-    String? emailAddress,
-  }) {
-    return Doctor(
-      firstName: firstName ?? this.firstName,
-      lastName: lastName ?? this.lastName,
-      practisingFrom: practisingFrom ?? this.practisingFrom,
-      professionalStatment: professionalStatment ?? this.professionalStatment,
-      phone: phone ?? this.phone,
-      password: password ?? this.password,
-      emailAddress: emailAddress ?? this.emailAddress,
-    );
-  }
+  
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'firstName': firstName,
-      'lastName': lastName,
-      'practisingFrom': practisingFrom,
-      'professionalStatment': professionalStatment,
-      'phone': phone,
-      'password': password,
-      'emailAddress': emailAddress,
+      'id': id,
+      'first_name': first_name,
+      'last_name': last_name,
+      "speciality": speciality,
+      'practising_from': practising_from,
+      'professional_statment': professional_statment,
+      'email_address': email_address,
+      'image_profile_url': image_profile_url,
+      'clinic': clinic.toMap(),
     };
   }
 
   factory Doctor.fromMap(Map<String, dynamic> map) {
     return Doctor(
-      firstName: map['firstName'] as String,
-      lastName: map['lastName'] as String,
-      practisingFrom: map['practisingFrom'] != null
-          ? map['practisingFrom'] as String
-          : null,
-      professionalStatment: map['professionalStatment'] != null
-          ? map['professionalStatment'] as String
-          : null,
-      phone: map['phone'] as String,
-      password: map['password'] as String,
-      emailAddress: map['emailAddress'] as String,
+      id: map['id'] as int,
+      first_name: map['first_name'] as String,
+      last_name: map['last_name'] as String,
+      speciality: map['speciality'] as String,
+      practising_from: map['practising_from'] != null ? map['practising_from'] as String : null,
+      professional_statment: map['professional_statment'] != null ? map['professional_statment'] as String : null,
+      email_address: map['email_address'] as String,
+      image_profile_url: map['image_profile_url'] != null ? map['image_profile_url'] as String : null,
+      clinic: Clinic.fromMap(map['clinic'] as Map<String,dynamic>),
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory Doctor.fromJson(String source) =>
-      Doctor.fromMap(json.decode(source) as Map<String, dynamic>);
-
-  @override
-  String toString() {
-    return 'Doctor(firstName: $firstName, lastName: $lastName, practisingFrom: $practisingFrom, professionalStatment: $professionalStatment, phone: $phone, password: $password, emailAddress: $emailAddress)';
-  }
-
-  @override
-  bool operator ==(covariant Doctor other) {
-    if (identical(this, other)) return true;
-
-    return other.firstName == firstName &&
-        other.lastName == lastName &&
-        other.practisingFrom == practisingFrom &&
-        other.professionalStatment == professionalStatment &&
-        other.phone == phone &&
-        other.password == password &&
-        other.emailAddress == emailAddress;
-  }
-
-  @override
-  int get hashCode {
-    return firstName.hashCode ^
-        lastName.hashCode ^
-        practisingFrom.hashCode ^
-        professionalStatment.hashCode ^
-        phone.hashCode ^
-        password.hashCode ^
-        emailAddress.hashCode;
-  }
-}
-
-class DoctorNotifier extends StateNotifier<Doctor> {
-  DoctorNotifier(super.state);
-
-  update(
-      String? firstName,
-      String? lastName,
-      String? practisingFrom,
-      String? professionalStatment,
-      String? phone,
-      String? password,
-      String? emailAddress) {
-    state.copyWith(
-        firstName: firstName,
-        lastName: lastName,
-        practisingFrom: practisingFrom,
-        professionalStatment: professionalStatment,
-        phone: phone,
-        password: password,
-        emailAddress: emailAddress);
-  }
+  factory Doctor.fromJson(String source) => Doctor.fromMap(json.decode(source) as Map<String, dynamic>);
 }

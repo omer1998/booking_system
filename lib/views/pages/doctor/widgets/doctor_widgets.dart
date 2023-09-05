@@ -9,16 +9,17 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 
 
 class PersonalImageSlider extends StatelessWidget {
-  const PersonalImageSlider({super.key});
+  final String imgUrl;
+  const PersonalImageSlider({super.key, required this.imgUrl});
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final doctorImagesAsset = ["assets/images/doctor-image.jpg"];
     return CarouselSlider.builder(
-      itemCount: doctorImagesAsset.length,
+      itemCount: 1,
       itemBuilder: (context, index, realIndex) {
-        return Image.asset(doctorImagesAsset[index]);
+        return Image.network(imgUrl, fit: BoxFit.cover,);
       },
       options:
           CarouselOptions(enlargeCenterPage: true, clipBehavior: Clip.none),
@@ -103,9 +104,15 @@ class Location extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "Location",
-              style: theme.headlineSmall,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                 Icon(Icons.location_on, color: Theme.of(context).primaryColor,),
+                Text(
+                  "Location",
+                  style: theme.headlineSmall,
+                ),
+              ],
             ),
             Text(
               location,
@@ -132,21 +139,26 @@ class WorksDays extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "Working Days",
-              style: theme.headlineSmall,
+            Row(
+              children: [
+                Icon(Icons.access_time, color: Theme.of(context).primaryColor,),
+                Text(
+                  "Working Days",
+                  style: theme.headlineSmall,
+                ),
+              ],
             ),
             Text(
-              "$days days",
+              "$days",
               style: theme.bodyMedium!.copyWith(fontSize: 14.sp),
             ),
             Text(
-              time,
+              "Time: ${time}",
               style: theme.bodyMedium!.copyWith(fontSize: 11.sp),
             ),
             holiday != null
                 ? Text(
-                    holiday!,
+                    "Holiday: ${holiday!}",
                     style: theme.bodyMedium!.copyWith(fontSize: 11.sp),
                   )
                 : Text(" ")
@@ -228,6 +240,44 @@ class GoogleLocation extends StatelessWidget {
           myLocationEnabled: true,
           // trafficEnabled: true,
         ),
+      ),
+    );
+  }
+}
+
+
+class ContactInfo extends StatelessWidget {
+  final String clinicPhone;
+  final String? clinicEmail;
+  const ContactInfo({super.key, required this.clinicPhone, this.clinicEmail});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(10.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.phone, color: Theme.of(context).primaryColor,),
+              Text(
+                  "Contact",
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
+            ],
+          ),
+          Text(
+            "Phone: $clinicPhone",
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+          clinicEmail != null ?
+          Text(
+            "Clinic Email: $clinicEmail",
+            style: Theme.of(context).textTheme.bodyMedium,
+          ): Container()
+        ],
       ),
     );
   }

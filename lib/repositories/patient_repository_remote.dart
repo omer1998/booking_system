@@ -12,12 +12,14 @@ import 'package:http/http.dart%20';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import "package:http/http.dart" as http;
 
+import '../models/doctor.dart';
+
 abstract class PatientRepository {
   patientSignUp(
       String firstName, String lastName, String email, String password);
   patientLogIn(Map<String, dynamic> body);
   checkPatientAuthValidation();
-  gettingPatientInfo(int id);
+  getAllDoctors();
 }
 
 class PatientApi extends PatientRepository {
@@ -105,18 +107,29 @@ class PatientApi extends PatientRepository {
             "Content-Type": "application/json",
             "Authorization": token
           });
-        
-          return response;
+
+      return response;
     } catch (e) {
       print("patient auth validation ${e}");
     }
   }
-  
+
   @override
-  gettingPatientInfo(int id) async{
-    // final response = await http.get(
-    //   Uri.parse("")
-    // );
+  Future<Either<String, http.Response>> getAllDoctors() async {
+    try {
+      final http.Response response = await http.get(
+          Uri.parse("${AppConstants.appUrl}/api/patient/all-doctors"),
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          });
+          
+      print("response of get all doctor --> ${Doctor.fromMap(jsonDecode(response.body)["doctors"][2]).clinic.city }");
+      return Right(response);
+    } catch (e) {
+      print("remote repo: error of get all doctor -->${e.toString()}");
+      return Left(e.toString());
+    }
   }
 }
 

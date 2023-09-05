@@ -1,13 +1,14 @@
-import 'dart:io';
 
 import 'package:booking_system/views/pages/doctor/widgets/doctor_widgets.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fpdart/fpdart.dart' as fpdart;
 
 import 'package:pusher_client_fixed/pusher_client_fixed.dart';
 
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+
+import '../../../models/doctor.dart';
 // import 'package:socket_io_client/socket_io_client.dart';
 // import 'package:socket_io_client/socket_io_client.dart';
 
@@ -22,36 +23,37 @@ const String channelName = 'booking-dates';
 const String eventName = 'BookingDates';
 
 class DoctorPage extends StatefulWidget {
-  const DoctorPage({super.key});
+  final Doctor doctor;
+  const DoctorPage({super.key, required this.doctor});
 
   @override
   State<DoctorPage> createState() => _DoctorPageState();
 }
 
 class _DoctorPageState extends State<DoctorPage> {
-  late IO.Socket socket;
+  // late IO.Socket socket;
   // late final pusherClient;
   // late final channel;
 
   @override
   void initState() {
     print("----------------before initSoket----------------");
-    initSocket();
-    super.initState();
+    // initSocket();
+    // super.initState();
   }
 
-  initSocket() async {
-     socket = IO.io('http://10.0.2.2:3000',
-    IO.OptionBuilder()
-      .setTransports(['websocket']) // for Flutter or Dart VM
-      .disableAutoConnect()  // disable auto-connection
-      // .setExtraHeaders({'foo': 'bar'}) // optional
-      .build()
-  );
-socket.connect();
-socket.onError((data) => print("error: $data"));
-// socket.emit('booking-dates', "booking date");
-socket.on("booking-dates", (data) => print("data: $data"));
+//   initSocket() async {
+//      socket = IO.io('http://10.0.2.2:3000',
+//     IO.OptionBuilder()
+//       .setTransports(['websocket']) // for Flutter or Dart VM
+//       .disableAutoConnect()  // disable auto-connection
+//       // .setExtraHeaders({'foo': 'bar'}) // optional
+//       .build()
+//   );
+// socket.connect();
+// socket.onError((data) => print("error: $data"));
+// // socket.emit('booking-dates', "booking date");
+// socket.on("booking-dates", (data) => print("data: $data"));
 
 
 
@@ -131,19 +133,14 @@ socket.on("booking-dates", (data) => print("data: $data"));
 
 
 //
-  }
+  // }
 
   @override
   void dispose() {
-    socket.disconnect();
+    // socket.disconnect();
 
-    socket.dispose();
-    // client.disconnect();
-    // client.dipose();
-    // channel.unbind(eventName); // Replace with your event name
-    // pusherClient.unsubscribe(channelName); // Replace with your channel name
-    // pusherClient.disconnect();
-    // pusher.disconnect();
+    // socket.dispose();
+    
 
     super.dispose();
   }
@@ -154,6 +151,7 @@ socket.on("booking-dates", (data) => print("data: $data"));
       appBar: AppBar(
         title: Text("Category name"),
         backgroundColor: Colors.white,
+        actionsIconTheme: IconThemeData(color: Colors.black),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -162,20 +160,26 @@ socket.on("booking-dates", (data) => print("data: $data"));
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              PersonalImageSlider(),
+              PersonalImageSlider(imgUrl: widget.doctor.image_profile_url ?? "https://img.freepik.com/premium-vector/doctor-icon-avatar-white_136162-58.jpg?w=2000",),
               PersonalInfo(
-                  name: "Omer faris nawar", speciality: 'Cardiologist'),
+                  name: "${widget.doctor.first_name} ${widget.doctor.last_name}", speciality: widget.doctor.speciality),
               ProfessionalStatment(
-                  statement:
-                      "Omer faris Omer faris Omer faris Omer faris Omer faris Omer faris Omer faris Omer faris Omer faris Omer faris Omer faris Omer faris Omer faris"),
+                  statement: widget.doctor.professional_statment ?? ""
+                     ),
               WorksDays(
-                  days: "all", time: "3 to 9", holiday: "friday and sunday"),
+                  days: "All days", time: "${widget.doctor.clinic.clinic_start_time} to ${widget.doctor.clinic.clinic_end_time}", holiday: "friday and sunday"),
+              // ContactInfo(),
               Location(
-                  location: "Baghdad, al karada, Al wathiq square, 52 str"),
-              // GoogleLocation(
-              //   latitude: 33.31016839890198,
-              //   longitude: 44.363591018699346,
-              // ),
+                // governorate -- city -- town -- street
+                  location: "${widget.doctor.clinic.governorate} ${widget.doctor.clinic.city} ${widget.doctor.clinic.town ??""} ${widget.doctor.clinic.street_name??""} ${widget.doctor.clinic.additional_address_info ?? ""}"),
+              widget.doctor.clinic.latitude != null && widget.doctor.clinic.longitude != null ?
+              GoogleLocation(
+                latitude: widget.doctor.clinic.latitude!,
+                longitude: widget.doctor.clinic.longitude!,
+              ): Container(),
+              widget.doctor.clinic.clinic_phone != null ?
+              ContactInfo(clinicPhone: widget.doctor.clinic.clinic_phone!, clinicEmail: widget.doctor.clinic.clinic_email,) : 
+              Container(),
               ActionButtons()
             ],
           ),

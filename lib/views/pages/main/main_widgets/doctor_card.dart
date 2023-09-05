@@ -3,8 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../../../models/doctor.dart';
+
 class DoctorCard extends StatefulWidget {
-  const DoctorCard({super.key});
+  final Doctor doctor;
+
+
+  const DoctorCard({super.key,required this.doctor});
 
   @override
   State<DoctorCard> createState() => _DoctorCardState();
@@ -14,7 +19,7 @@ class _DoctorCardState extends State<DoctorCard> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.pushNamed(context , Routes.doctorPage),
+      onTap: () => Navigator.pushNamed(context , Routes.doctorPage, arguments: widget.doctor),
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         child: SizedBox(
@@ -25,7 +30,7 @@ class _DoctorCardState extends State<DoctorCard> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: CircleAvatar(
-                  backgroundImage: AssetImage('assets/images/doctor-image.jpg'),
+                  backgroundImage: NetworkImage(widget.doctor.image_profile_url ?? "https://img.freepik.com/premium-vector/doctor-icon-avatar-white_136162-58.jpg?w=2000"),
                   minRadius: 30.0,
                   maxRadius: 40.0,
                 ),
@@ -48,11 +53,11 @@ class _DoctorCardState extends State<DoctorCard> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text(
-                    "اسم الطبيب",
+                    "${widget.doctor.first_name} ${widget.doctor.last_name}",
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   // title / description
-                  Text("اختاص كسور و عظام"),
+                  Text(widget.doctor.speciality),
                   Row(
                     children: [
                       ElevatedButton(
