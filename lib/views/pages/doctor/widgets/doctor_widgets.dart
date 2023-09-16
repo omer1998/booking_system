@@ -1,3 +1,4 @@
+import 'package:booking_system/utilities/routes.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -178,7 +179,9 @@ class ActionButtons extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamed(Routes.bookingPage);
+              },
               child: Text("Appointment"),
               style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(

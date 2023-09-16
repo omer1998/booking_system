@@ -2,6 +2,7 @@ import 'package:booking_system/utilities/routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../models/doctor.dart';
 
@@ -18,8 +19,12 @@ class DoctorCard extends StatefulWidget {
 class _DoctorCardState extends State<DoctorCard> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => Navigator.pushNamed(context , Routes.doctorPage, arguments: widget.doctor),
+    return Consumer(builder: (context, ref, child) { 
+      return InkWell(
+      onTap: (){
+        Navigator.pushNamed(context , Routes.doctorPage, arguments: widget.doctor);
+        ref.read(doctorProvider.notifier).update((state) => widget.doctor);
+      } ,
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         child: SizedBox(
@@ -60,15 +65,18 @@ class _DoctorCardState extends State<DoctorCard> {
                   Text(widget.doctor.speciality),
                   Row(
                     children: [
-                      ElevatedButton(
-                        onPressed: () {},
+                      Consumer(builder: (context, ref, child) { return ElevatedButton(
+                        onPressed: () {
+                          ref.read(doctorProvider.notifier).update((state) => widget.doctor);
+                          Navigator.of(context).pushNamed(Routes.bookingPage);
+                        },
                         child: Text(AppLocalizations.of(context)!.appointment),
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20)
                           )
                         ),
-                      ),
+                      ); },),
                       IconButton(onPressed: (){}, icon: Icon(Icons.message_rounded), color: Colors.grey, splashRadius: 18,),
                       IconButton(onPressed: (){}, icon: Icon(Icons.favorite), color: Colors.grey, splashRadius: 18,),
         
@@ -83,6 +91,6 @@ class _DoctorCardState extends State<DoctorCard> {
           ]),
         ),
       ),
-    );
+    ); },);
   }
 }

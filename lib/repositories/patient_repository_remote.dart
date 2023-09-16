@@ -5,6 +5,8 @@ import 'dart:io';
 import 'package:booking_system/models/api/response.dart';
 import 'package:booking_system/repositories/patient_repository_local.dart';
 import 'package:booking_system/utilities/constants.dart';
+import 'package:booking_system/utilities/extensions.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:hive/hive.dart';
@@ -20,6 +22,7 @@ abstract class PatientRepository {
   patientLogIn(Map<String, dynamic> body);
   checkPatientAuthValidation();
   getAllDoctors();
+  bookDate(DateTime date, TimeOfDay time, int patientId , int doctorId);
 }
 
 class PatientApi extends PatientRepository {
@@ -131,6 +134,31 @@ class PatientApi extends PatientRepository {
       return Left(e.toString());
     }
   }
+  
+  @override
+ Future<Either<String, http.Response>>  bookDate(DateTime date, TimeOfDay time, int patientId, int doctorId) async {
+    final body = <String, dynamic>{
+      "doctor_id":doctorId ,
+        "user_id":patientId ,
+        "visit_date": date.toIso8601String(),
+        "visit_time": time.to24Hours()
+    };
+    print("from the repo: $body");
+    try {
+      final response = await http.post(
+        Uri.parse("${AppConstants.appUrl}/api/patient/booking-date"),
+        body: jsonEncode(body),headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        }
+      );
+      return Right(response);
+    } catch (e) {
+      return Left(e.toString());
+    }
+  }
+
+  
 }
 
 // making provider for this repository

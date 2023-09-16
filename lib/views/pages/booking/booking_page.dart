@@ -1,4 +1,6 @@
 // import 'package:booking_calendar/booking_calendar.dart';
+import 'package:booking_system/models/doctor.dart';
+import 'package:booking_system/models/patients/patient_model.dart';
 import 'package:booking_system/views/pages/auth/auth_widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,8 +29,8 @@ class BookingPageState extends ConsumerState<BookingPage> {
       ref.read(bookingPageProvider.notifier).copyWith(date: selectedDate);
       print(selectedDate);
     }
-    print("the date inside the riverpod controller ${ref.read(bookingPageProvider).date}");
-
+    print(
+        "the date inside the riverpod controller ${ref.read(bookingPageProvider).date}");
   }
 
   _selectTime(BuildContext context) async {
@@ -36,14 +38,15 @@ class BookingPageState extends ConsumerState<BookingPage> {
         await showTimePicker(context: context, initialTime: TimeOfDay.now());
     if (selectedTime != null &&
         selectedTime != ref.read(bookingPageProvider).time) {
-      print(selectedTime);
+      // print(selectedTime);
+      ref.read(bookingPageProvider.notifier).copyWith(time: selectedTime);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     // return BookingCalendar(bookingService: Booking, getBookingStream: getBookingStream, uploadBooking: (Booking){ }, convertStreamResultToDateTimeRanges: convertStreamResultToDateTimeRanges);
-    final bookingPageController = ref.watch(bookingPageProvider);
+    // final bookingPageController = ref.watch(bookingPageProvider);
     return SafeArea(
       child: Scaffold(
           body: SingleChildScrollView(
@@ -60,9 +63,10 @@ class BookingPageState extends ConsumerState<BookingPage> {
               CustomStepTitle(title: "Select the date"),
               TextButton(
                   onPressed: () {
-                      _selectDate(context);
+                    _selectDate(context);
                   },
-                  child: Text(ref.watch(bookingPageProvider).date.toIso8601String())),
+                  child: Text(
+                      ref.watch(bookingPageProvider).date.toIso8601String())),
               ElevatedButton(
                   onPressed: () {
                     _selectDate(context);
@@ -72,9 +76,29 @@ class BookingPageState extends ConsumerState<BookingPage> {
                   onPressed: () {
                     _selectTime(context);
                   },
-                  child: Text("Select Time"))
+                  child: Text("Select Time")),
 
               // Text()
+              Consumer(
+                builder: (context, ref, child) {
+                  return ElevatedButton(
+                      onPressed: () {
+                        final patient = ref.read(patientProvider);
+                        // print(patient != null ? "${patient.id} ${patient.first_name} ${patient.last_name} ${patient.email} ": " no data");
+                        final doctor = ref.read(doctorProvider);
+                        final bookingPageController = ref.read(bookingPageProvider);
+                        bookingPageController.bookDate( patient!.id,doctor!.id);
+                      }, child: Text("Show patient and doctor info"));
+                },
+              ),
+              Consumer(builder: (context, ref, child) { 
+                final controller = ref.watch(bookingPageProvider);
+                return Column(
+                  children: [
+                    Text("Date: ${controller.date}"),
+                  Text("Time: ${controller.time.format(context)}"),
+                  ],
+                ); },)
             ]),
       ))),
     );

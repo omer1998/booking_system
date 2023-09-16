@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:booking_system/models/patients/patient_model.dart';
 import 'package:booking_system/repositories/patient_repository_local.dart';
 import 'package:booking_system/repositories/patient_repository_remote.dart';
 import 'package:booking_system/utilities/custom_snackbar.dart';
@@ -52,32 +53,43 @@ class PatientSignInNotifier extends StateNotifier<PatientSignInPageState> {
               ref
                   .read(patientLocalProvider)
                   .savePatientToken(myResponse.token!);
-                  
-              showCustomSnackBar(context,"Token is saved");
-
+              showCustomSnackBar(context, "Token is saved");
+              // save this patient locally and respond by the snackbar in successful and failed state
+              // final saveOrError =
+              //     ref.read(patientLocalProvider).savePatient(myResponse.user!);
+              // saveOrError.fold(
+              //     (l) => showCustomSnackBar(context, l),
+              //     (r) => showCustomSnackBar(
+              //         context, "Patient has been saved successfully"));
+              
+              // make another provider to store the user state in it, in order to use this user info when needed
+              // TODO: you should think abiut the response more if it does not return a user
+              ref.read(patientProvider.notifier).update((state) => myResponse.user);
             } catch (e) {
               print(e);
               showSnackBar(context, e.toString());
               return;
             }
-            Navigator.of(context)
-                .pushNamedAndRemoveUntil(Routes.mainPage, (route) => false, arguments: myResponse.user);
-                // we give the user detail to the main page of the user
+            Navigator.of(context).pushNamedAndRemoveUntil(
+                Routes.mainPage, (route) => false,
+                arguments: myResponse.user);
+            // we give the user detail to the main page of the user
           });
     });
   }
 
   checkPatientAuthValidation(BuildContext context) async {
     try {
-      final response = await ref.read(patientApiProvider).checkPatientAuthValidation();
+      final response =
+          await ref.read(patientApiProvider).checkPatientAuthValidation();
       print("sign in controller --> ${response.body}");
       final authValidationState = json.decode(response.body);
-      if(authValidationState == true){
-        Navigator.of(context).pushNamedAndRemoveUntil(Routes.mainPage, (route) => false);
-
+      if (authValidationState == true) {
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil(Routes.mainPage, (route) => false);
       }
     } catch (e) {
-      print(e); 
+      print(e);
     }
   }
 }

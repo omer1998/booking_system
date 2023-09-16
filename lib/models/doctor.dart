@@ -63,3 +63,6 @@ class Doctor {
 
   factory Doctor.fromJson(String source) => Doctor.fromMap(json.decode(source) as Map<String, dynamic>);
 }
+
+// provider for the doctor model
+final doctorProvider = StateProvider<Doctor?>((ref) => null);

@@ -1,3 +1,4 @@
+import 'package:booking_system/models/patients/patient_model.dart';
 import 'package:booking_system/repositories/patient_repository_local.dart';
 import 'package:booking_system/repositories/patient_repository_remote.dart';
 import 'package:booking_system/utilities/routes.dart';
@@ -20,6 +21,7 @@ Future<void> main() async {
   // initializing hive
   await Hive.initFlutter();
   // register all type adapter here to be used in hive
+    Hive.registerAdapter(PatientAdapter());
   runApp(
     ProviderScope(child: MyApp()),
   );
