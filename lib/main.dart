@@ -21,7 +21,7 @@ Future<void> main() async {
   // initializing hive
   await Hive.initFlutter();
   // register all type adapter here to be used in hive
-    Hive.registerAdapter(PatientAdapter());
+  Hive.registerAdapter(PatientAdapter());
   runApp(
     ProviderScope(child: MyApp()),
   );
@@ -48,17 +48,15 @@ class MyApp extends StatelessWidget {
       // localizationsDelegates: AppLocalizations.localizationsDelegates,
       // supportedLocales: AppLocalizations.supportedLocales,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        // useMaterial3: true
-        appBarTheme: AppBarTheme(
-          // color: Colors.black,
-          // actionsIconTheme: IconThemeData(color: Colors.black)
-        )
-      ),
-      
+          primarySwatch: Colors.blue,
+          // useMaterial3: true
+          appBarTheme: AppBarTheme(
+              // color: Colors.black,
+              // actionsIconTheme: IconThemeData(color: Colors.black)
+              )),
+
       initialRoute: Routes.home,
       onGenerateRoute: (settings) => onGenerateRoute(settings),
-      
     );
   }
 }
@@ -84,33 +82,40 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: ElevatedButton(child: Text("fetch"),onPressed: () async{
-        await ref.read(patientApiProvider).getAllDoctors();
-      }, ),
+      floatingActionButton: ElevatedButton(
+        child: Text("fetch"),
+        onPressed: () async {
+          await ref.read(patientApiProvider).getAllDoctors();
+        },
+      ),
       appBar: AppBar(
         title: Text(widget.title),
       ),
       body: Center(
-          child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, Routes.patientSignUp);
-              },
-              child: Text("Sign Up as Patient")),
-          ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pushReplacementNamed(Routes.doctorSetup);
-              },
-              child: Text("Sign Up as Doctor")),
-
-              ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pushReplacementNamed(Routes.bookingPage);
-              },
-              child: Text("Booking Page"))
-        ],
+          child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, Routes.patientSignUp);
+                },
+                child: Text("Sign Up as Patient")),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .pushReplacementNamed(Routes.doctorSetup);
+                },
+                child: Text("Sign Up as Doctor")),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .pushReplacementNamed(Routes.bookingPage);
+                },
+                child: Text("Booking Page"))
+          ],
+        ),
       )),
 
       // This trailing comma makes auto-formatting nicer for build methods.

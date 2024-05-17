@@ -22,7 +22,7 @@ abstract class PatientRepository {
   patientLogIn(Map<String, dynamic> body);
   checkPatientAuthValidation();
   getAllDoctors();
-  bookDate(DateTime date, TimeOfDay time, int patientId , int doctorId);
+  bookDate(DateTime date, TimeOfDay time, int patientId, int doctorId);
 }
 
 class PatientApi extends PatientRepository {
@@ -40,22 +40,13 @@ class PatientApi extends PatientRepository {
           headers: {
             "Content-type": "application/json",
             "Accept": "application/json"
-          });
+          }).timeout(Duration(seconds: 5));
       return right(response);
     } on TimeoutException catch (e) {
-      print("timeoutexception: ${e.message}");
-
-      return left(e.message!);
+      return left("Timeout");
     } on SocketException catch (e) {
-      if (e.message == "Connection failed") {
-        return left("No Internet Connection");
-      }
-      print("socketException: ${e}");
-
-      return left(e.message);
+      return left("No Internet Connection");
     } on ClientException catch (e) {
-      print("clientException: ${e.message}");
-
       return left(e.message);
     } catch (e) {
       return left(e.toString());
@@ -126,39 +117,39 @@ class PatientApi extends PatientRepository {
             "Content-Type": "application/json",
             "Accept": "application/json"
           });
-          
-      print("response of get all doctor --> ${Doctor.fromMap(jsonDecode(response.body)["doctors"][2]).clinic.city }");
+
+      print(
+          "response of get all doctor --> ${Doctor.fromMap(jsonDecode(response.body)["doctors"][2]).clinic.city}");
       return Right(response);
     } catch (e) {
       print("remote repo: error of get all doctor -->${e.toString()}");
       return Left(e.toString());
     }
   }
-  
+
   @override
- Future<Either<String, http.Response>>  bookDate(DateTime date, TimeOfDay time, int patientId, int doctorId) async {
+  Future<Either<String, http.Response>> bookDate(
+      DateTime date, TimeOfDay time, int patientId, int doctorId) async {
     final body = <String, dynamic>{
-      "doctor_id":doctorId ,
-        "user_id":patientId ,
-        "visit_date": date.toIso8601String(),
-        "visit_time": time.to24Hours()
+      "doctor_id": doctorId,
+      "user_id": patientId,
+      "visit_date": date.toIso8601String(),
+      "visit_time": time.to24Hours()
     };
     print("from the repo: $body");
     try {
       final response = await http.post(
-        Uri.parse("${AppConstants.appUrl}/api/patient/booking-date"),
-        body: jsonEncode(body),headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        }
-      );
+          Uri.parse("${AppConstants.appUrl}/api/patient/booking-date"),
+          body: jsonEncode(body),
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          });
       return Right(response);
     } catch (e) {
       return Left(e.toString());
     }
   }
-
-  
 }
 
 // making provider for this repository

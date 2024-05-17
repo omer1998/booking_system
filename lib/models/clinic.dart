@@ -16,6 +16,8 @@ class Clinic {
   final String? clinic_phone;  // think if it must be required 
   final String? clinic_email;
   final String? clinic_photo_url;
+  final int? patient_number_each_Day;
+  final int appointment_duration;
   Clinic({
     required this.clinic_name,
     required this.working_hours,
@@ -23,6 +25,7 @@ class Clinic {
     required this.clinic_end_time,
     required this.governorate,
     required this.city,
+    required this.appointment_duration,
     this.town,
     this.street_name,
     this.additional_address_info,
@@ -31,6 +34,7 @@ class Clinic {
     this.clinic_phone,
     this.clinic_email,
     this.clinic_photo_url,
+    this.patient_number_each_Day
   });
 
   Map<String, dynamic> toMap() {
@@ -49,6 +53,8 @@ class Clinic {
       'clinic_phone': clinic_phone,
       'clinic_email': clinic_email,
       'clinic_photo_url': clinic_photo_url,
+      "patient_number_each_Day": patient_number_each_Day,
+      "appointment_duration": appointment_duration
     };
   }
 
@@ -68,6 +74,8 @@ class Clinic {
       clinic_phone: map['clinic_phone'] != null ? map['clinic_phone'] as String : null,
       clinic_email: map['clinic_email'] != null ? map['clinic_email'] as String : null,
       clinic_photo_url: map['clinic_photo_url'] != null ? map['clinic_photo_url'] as String : null,
+      patient_number_each_Day: map["patient_number_each_Day"] != null ? map["patient_number_each_Day"] as int : null,
+      appointment_duration: map["appointment_duration"]
     );
   }
 

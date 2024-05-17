@@ -39,12 +39,12 @@ class PatientSignInNotifier extends StateNotifier<PatientSignInPageState> {
 
     EasyLoading.show();
     final responseOrError = await patientApi.patientLogIn(state.toMap());
+    EasyLoading.dismiss();
     responseOrError.fold((error) {
-      EasyLoading.dismiss();
       showSnackBar(context, error);
     }, (response) {
       final myResponse = ResponseApi.fromJson(response.body);
-      EasyLoading.dismiss();
+
       handleResponse(
           response: response,
           context: context,
@@ -61,10 +61,12 @@ class PatientSignInNotifier extends StateNotifier<PatientSignInPageState> {
               //     (l) => showCustomSnackBar(context, l),
               //     (r) => showCustomSnackBar(
               //         context, "Patient has been saved successfully"));
-              
+
               // make another provider to store the user state in it, in order to use this user info when needed
               // TODO: you should think abiut the response more if it does not return a user
-              ref.read(patientProvider.notifier).update((state) => myResponse.user);
+              ref
+                  .read(patientProvider.notifier)
+                  .update((state) => myResponse.user);
             } catch (e) {
               print(e);
               showSnackBar(context, e.toString());
